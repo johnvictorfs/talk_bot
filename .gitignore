@@ -105,8 +105,11 @@ venv.bak/
 # mypy
 .mypy_cache/
 
-# Local
-talk_bot/settings.json
+# Setting files
+settings.json
+db_credentials.json
+
+# Editor files
 .idea
 
 # Temporary

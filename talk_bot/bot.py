@@ -67,7 +67,7 @@ class Bot(commands.Bot):
         print(f'Logged in as: {self.user.name}\n'
               f'Using discord.py version: {discord.__version__}\n'
               f'Owner: {self.app_info.owner}\n'
-              f'Prefix: {self.settings.get("prefix")}'
+              f'Prefix: {self.settings.get("prefix")}\n'
               f'Template Maker: SourSpoon / Spoon#7805')
         print('-' * 10)
 
@@ -82,21 +82,33 @@ class Bot(commands.Bot):
 
     def add_message(self, message: discord.Message):
         """
-        Adds message details to database if it wasn't sent in a ignored channel, or if it starts with the
-        bot's command prefix
+        Adds message details to database if:
+            - It wasn't sent in an ignored channel
+            - If it doesn't start with the bot's command prefix
+            - If it doesn't have less than 10 characters
         """
+        if len(message.content) < 10:
+            return
         is_command = message.content.startswith(self.settings.get('prefix'))
+        if is_command:
+            return
         is_ignored = IgnoredChannel.select().where(IgnoredChannel.channel_id == message.channel.id)
-        if not is_ignored and not is_command:
+        if is_ignored:
+            return
+        if not is_ignored:
             Message.create(
                 content=message.content,
                 author_name=message.author.name,
                 author_id=message.author.id,
+                channel_id=message.channel.id,
                 timestamp=message.created_at
             )
 
     @staticmethod
     def db_setup():
+        """
+        Setups the bot's database, creates necessary tables if not yet created
+        """
         db.connect()
         db.create_tables([Message, IgnoredChannel])
         db.close()
