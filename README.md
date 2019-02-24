@@ -27,10 +27,14 @@ The bot could easily be changed to make use of a more robust message history and
     - `messages_channel` needs to be the ID of the channel you want the bot to send the generated messages to, you can get the ID of a channel in Discord by turning on the Developer Mode in the settings, and right-clicking a channel and pressing 'Copy ID'
     - `messages_delay` is the delay (in minutes) between messages the bot sends to the configured channel
 
+***
+
 #### Running
 
 - `$ cd talk_bot`
 - `$ python bot.py`
+
+***
 
 #### Discord Commands
 
