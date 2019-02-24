@@ -5,7 +5,7 @@ from discord.ext import commands
 from talk_bot.orm.models import IgnoredChannel
 
 
-class ManagementCommands:
+class ManagementCommands(commands.Cog):
 
     def __init__(self, bot):
         self.bot = bot
@@ -28,8 +28,18 @@ class ManagementCommands:
             return await ctx.send(f'Invalid Channel: {channel_str}')
 
         channel_id = int(channel_id.group())
-        IgnoredChannel.create(channel_id=channel_id)
-        return await ctx.send(f'Channel <#{channel_id}> ignored successfully.')
+        channel = self.bot.get_channel(channel_id)
+        if not channel:
+            return await ctx.send(f'Invalid Channel: {channel_str}')
+
+        # Only allow a channel to be ignored if the ignore command was sent in the same guild as that channel
+        if channel in ctx.guild.channels:
+            ignored, created = IgnoredChannel.get_or_create(channel_id=channel_id)
+            if not created:
+                return await ctx.send(f'Channel <#{channel_id}> is already ignored.')
+            return await ctx.send(f'Channel <#{channel_id}> ignored successfully.')
+        else:
+            return await ctx.send("You can only ignore channels from the same server you're sending this command.")
 
     @commands.has_permissions(manage_channels=True)
     @commands.command(aliases=['unignore'])
@@ -55,6 +65,13 @@ class ManagementCommands:
 
         IgnoredChannel.delete().where(IgnoredChannel.channel_id == channel_id).execute()
         return await ctx.send(f'Channel <#{channel_id}> is no longer being ignored.')
+
+    @commands.is_owner()
+    @commands.command()
+    async def clean_db(self, ctx: commands.Context):
+        await ctx.send("Cleaning the bot's database...")
+        await self.bot.clean_db()
+        return await ctx.send("Sucessfully cleaned the bot's database.")
 
 
 def setup(bot):

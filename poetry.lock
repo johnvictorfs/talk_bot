@@ -68,17 +68,16 @@ description = "A python wrapper for the Discord API"
 name = "discord.py"
 optional = false
 python-versions = ">=3.5.3"
-version = "1.0.0a1669+gcfc2e47"
+version = "1.0.0a1689+g3a8214a"
 
 [package.dependencies]
 aiohttp = ">=3.3.0,<3.6.0"
 websockets = ">=6.0,<7.0"
 
 [package.source]
-reference = "cfc2e47b4f25bde3ed21365b6507f023b7b39977"
+reference = "3a8214a1155ac46ca13be29600bd9c48198bb4da"
 type = "git"
 url = "https://github.com/Rapptz/discord.py.git"
-
 [[package]]
 category = "main"
 description = "Internationalized Domain Names in Applications (IDNA)"

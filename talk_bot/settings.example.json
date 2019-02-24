@@ -1,4 +1,6 @@
 {
-  "token": "Bot_Token_Here",
-  "prefix": "!"
+  "token": "Bot Token Here",
+  "prefix": "!",
+  "messages_channel": "Channel ID Here",
+  "messages_delay": "5"
 }

@@ -18,7 +18,8 @@ db = peewee.PostgresqlDatabase(
 
 
 class Message(peewee.Model):
-    content = peewee.CharField()
+    message_id = peewee.BigIntegerField(null=True, unique=True)
+    content = peewee.TextField()
     author_name = peewee.CharField()
     author_id = peewee.BigIntegerField()
     channel_id = peewee.BigIntegerField(null=True)
