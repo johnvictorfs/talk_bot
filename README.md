@@ -18,6 +18,9 @@ The bot could easily be changed to make use of a more robust message history and
 
 - Dependencies are present in the `pyproject.toml` file and can be easily installed with [`poetry`](https://github.com/sdispater/poetry) with `$ poetry install`
 
+- Rename [`talk_bot/orm/db_credentials.example.json`](talk_bot/orm/db_credentials.example.json) to `db_credentials.json` and put in the database credentials for a Postgres database
+    - Or, if you wish to use a Sqlite database, uncomment the `db = peewee.SqliteDatabase('bot.db')` line at [`talk_bot/orm/models.py`](talk_bot/orm/models.py)
+
 - Rename [`talk_bot/settings.example.json`](talk_bot/settings.example.json) to `settings.json` and edit in the needed fields
 
     - You can create a discord bot and get its token at https://discordapp.com/developers/applications/  (Do not share your token with anyone!)

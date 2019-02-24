@@ -16,6 +16,9 @@ db = peewee.PostgresqlDatabase(
     port=credentials['port']
 )
 
+# Uncomment the line below if you wish to use Sqlite instead of Postgres for the bot's database
+# db = peewee.SqliteDatabase('bot.db')
+
 
 class Message(peewee.Model):
     message_id = peewee.BigIntegerField(null=True, unique=True)
